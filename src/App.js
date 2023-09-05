@@ -12,15 +12,28 @@ function App() {
   const [completedTodos,setCompletedTodos]=useState([])
 
   const handleAddTodo = () => {
+  // Check if a todo with the same title already exists
+  const isDuplicateTodo = allTodos.some((todo) => todo.title === newTitle);
+
+  if (isDuplicateTodo) {
+    alert("This todo already exists. Please enter a unique title.");
+  } else {
     let newTodoItem = {
       title: newTitle,
       description: newDecription
-    }
-  const updatedTodoArr = [...allTodos];
+    };
+
+    const updatedTodoArr = [...allTodos];
     updatedTodoArr.push(newTodoItem);
-    setTodos(updatedTodoArr)
-    localStorage.setItem('todoList',JSON.stringify(updatedTodoArr))
+    setTodos(updatedTodoArr);
+    localStorage.setItem('todoList', JSON.stringify(updatedTodoArr));
+
+    // Reset the input fields
+    setNewTitle("");
+    setNewDescription("");
   }
+};
+
 
   const handleDeleteTodoItem = (index) => {
     const updatedTodoArr = allTodos.filter((_, i) => i !== index);
